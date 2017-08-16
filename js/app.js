@@ -1,47 +1,51 @@
 ﻿var app = angular.module('MAQSoftwareApp', ['ngRoute', 'ngResource']);
 app.config(function ($routeProvider, $locationProvider) {
-       
+
     $routeProvider
     .when("/", {
         templateUrl: "/views/home.html",
         controller: "HomeController"
     })
     .when('/expertise', {
-        templateUrl: '/views/datamanagement.html'
+        templateUrl: '/views/datamanagement.html',
+        controller: "HomeController"
     })
     .when('/expertise/datamanagement', {
-        templateUrl: '/views/datamanagement.html'
+        templateUrl: '/views/datamanagement.html',
+        controller: "HomeController"
     })
     .when('/expertise/artificialintelligence', {
-        templateUrl: '/views/artificialintelligence.html'
+        templateUrl: '/views/artificialintelligence.html',
+        controller: "HomeController"
     })
     .when('/expertise/selfservicebi', {
-        templateUrl: '/views/selfservicebi.html'
+        templateUrl: '/views/selfservicebi.html',
+        controller: "HomeController"
     })
     .when('/expertise/appdevelopment', {
-        templateUrl: '/views/appdevelopment.html'
+        templateUrl: '/views/appdevelopment.html',
+        controller: "HomeController"
     })
     .when('/expertise/cloudtransformation', {
-        templateUrl: '/views/cloudtransformation.html'
+        templateUrl: '/views/cloudtransformation.html',
+        controller: "HomeController"
     })
     .when('/expertise/collaborationcontent', {
-        templateUrl: '/views/collaborationcontent.html'
+        templateUrl: '/views/collaborationcontent.html',
+        controller: "HomeController"
     })
     .when('/engagement', {
-        templateUrl: '/views/about.html'
+        templateUrl: '/views/about.html',
+        controller: "HomeController"
     })
     .when('/engagement/about', {
-        templateUrl: '/views/about.html'
-    })
-    .when('/engagement/deliveryapproach', {
-        templateUrl: '/views/deliveryapproach.html'
+        templateUrl: '/views/about.html',
+        controller: "HomeController"
     })
     .when('/engagement/recognitions', {
-        templateUrl: '/views/recognitions.html'
-    })
-    .when('/engagement/clients', {
-        templateUrl: '/views/clients.html'
-    })
+        templateUrl: '/views/recognitions.html',
+        controller: "HomeController"
+    })    
     .when('/news', {
         templateUrl: '/views/news.html',
         controller: "NewsController"
@@ -53,54 +57,53 @@ app.config(function ($routeProvider, $locationProvider) {
     .when('/contact', {
         templateUrl: '/views/contact.html',
         controller: "ContactController"
-    })
-    .when('/careersinus', {
-        templateUrl: '/views/careersinUS.html',
-        controller: "CareersinUSController"
-    })
-    .when('/careersinind', {
-        templateUrl: '/views/careersinInd.html',
-        controller: "CareersinIndController"
-    })
+    })    
     .when('/powerbisupport', {
         templateUrl: '/views/powerbisupport.html',
         controller: "PowerBISupportController"
     })
     .when('/privacystatement', {
-        templateUrl: '/views/privacystatement.html'
+        templateUrl: '/views/privacystatement.html',
+        controller: "PrivacyStatementController"
     }).otherwise({ redirectTo: "/" });
     $locationProvider.html5Mode(true);
-
 })
 .controller('HomeController', function ($scope) {
     $scope.$on('$viewContentLoaded', function () {
-        loadPlugins();        
+        loadPlugins();
     });
 }).controller('ContactController', function ($scope) {
-    $scope.$on('$viewContentLoaded', function () {        
-        initializeMap();
+    $scope.$on('$viewContentLoaded', function () {
+        loadPlugins();
+        contactConstructor();
     });
 }).controller('NewsController', function ($scope) {
     $scope.$on('$viewContentLoaded', function () {
+        loadPlugins();
         newsConstructor();
     });
 }).controller('CareersController', function ($scope) {
     $scope.$on('$viewContentLoaded', function () {
-        onYouTubeIframeAPIReady();
-        careersConstructor();
-    });
-}).controller('CareersinUSController', function ($scope) {
-    $scope.$on('$viewContentLoaded', function () {
-        onYouTubeIframeAPIReady();
-        careersInUS();
-    });
-}).controller('CareersinIndController', function ($scope) {
-    $scope.$on('$viewContentLoaded', function () {
-        onYouTubeIframeAPIReady();
-        careersInInd();
+        loadPlugins();
+        accordion();        
     });
 }).controller('PowerBISupportController', function ($scope) {
     $scope.$on('$viewContentLoaded', function () {
+        loadPlugins();
         redirectPowerBI();
     });
+}).controller('PrivacyStatementController', function ($scope) {
+    $scope.$on('$viewContentLoaded', function () {
+        loadPlugins();
+        setHeader();
+    });
+}).directive('careerTabs', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, elm, attrs) {
+            setTimeout(function () {
+                //$(elm).tabs();
+            }, 0);
+        }
+    };
 });
