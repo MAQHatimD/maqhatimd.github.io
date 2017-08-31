@@ -310,23 +310,26 @@ h3 {
     font-size: 21px;
     letter-spacing: 4px;
     line-height: 32px;
+    text-transform:none;
 }
 
 h4 {
     font-size: 17px;
     letter-spacing: 2px;
     line-height: 28px;
+     text-transform:none;
 }
 
-    h4.h4 {
+    /*h4.h4 {
         letter-spacing: 4px;
-    }
+    }*/
 
 h5 {
     font-size: 15px;
     letter-spacing: 2px;
     line-height: 23px;
     font-weight: 600;
+     text-transform:none;
 }
 
 h6 {
@@ -334,6 +337,7 @@ h6 {
     letter-spacing: 2px;
     line-height: 17px;
     font-weight: 600;
+     text-transform:none;
 }
 
 h1.large {
@@ -5424,4 +5428,10 @@ ul.nav-tabs {
 
 .accordion-title {
     text-transform: none;
+}
+#blog .blog-post {
+margin-bottom:40px;
+}
+.btn-link-a.VwMap {
+    text-transform:none;
 }
