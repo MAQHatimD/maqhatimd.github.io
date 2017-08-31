@@ -13,86 +13,76 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-//function getParameterByNameSemicolon(name) {
-//    "use strict";
-//    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-//    var regex = new RegExp("[\\?;]" + name + "=([^;#]*)"),
-//        results = regex.exec(location.href);
-//    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-//}
+function redirectPowerBI() {
+    window.location.href = "/#expertise/powerbi"; // Redirecting to Power BI Expertise
+}
 
+function setTabNavLinkBehavior() {
+    $("#tabs .nav-link").click(function () {
+        $("#tabs .nav-link").removeClass('active');
+    });
+}
+
+function closeMenuIfOpen() {
+    $("a, a *, #body, #body *").click(function () {
+        if ($(this).hasClass("menu-has-sub") || $(this).hasClass("fa-angle-down") || $(this).hasClass("fa-angle-up")) {
+            return; // return in case of sub menu header click
+        }
+        if ($(".nav-bar-icon").length && $(".nav-bar-icon").hasClass("active")) {
+            $(".nav-bar-icon").removeClass("active");
+            if ($(".nav-menu").length && $(".nav-menu").hasClass("active")) {
+                $(".nav-menu").removeClass("active");
+            }
+            if ($(".nav-menu .nav-menu-inner .menu-opened").length) {
+                $(".nav-menu .nav-menu-inner .menu-opened").removeClass("menu-opened");
+            }
+            if ($(".nav-menu .nav-menu-inner .fa-angle-up").length) {
+                $(".nav-menu .nav-menu-inner .fa-angle-up").each(function () {
+                    $(this).removeClass("fa-angle-up").addClass("fa-angle-down");
+                })
+            }
+            if ($(".nav-menu .nav-menu-inner .sub-dropdown").length) {
+                $(".nav-menu .nav-menu-inner .sub-dropdown").each(function () {
+                    if ($(this).css('display') == 'block') {
+                        $(this).css('display', 'none');
+                    }
+                })
+            }
+        }
+    });
+}
 function isCareersPage() {
     if ($('#careers').length) {
         return true;
     }
     return false;
 }
+// Close menu if open
+closeMenuIfOpen();
 
-function loadCareers(sNewsData, queryParam, oBreadCrumb, oJobTitle, career) {
-    "use strict";
-    try {
-        var parser = new DOMParser(),
-            oNewsData = parser.parseFromString(sNewsData, "text/xml"),
-            entry1 = oNewsData.getElementsByTagName('entry').item(parseInt(queryParam)),
-            sContent = '<div class="BorderBottom"><p class="SemiBold">' + entry1.getElementsByTagName('content')[0].childNodes[0].nodeValue + '</p></div>';
-        oBreadCrumb.css("display", "block");
-        oJobTitle.css("display", "block");
-        $("#ProfileData").html(sContent);
-        $('#ProfileData *').removeAttr('style');
-    } catch (e) {
-        window.location.href = career;
-    }
-}
-
-function careersInUS() {
-    "use strict";
-    var sID = getParameterByName("q"),
-        sJobPost = getParameterByName("pn"),
-        oArticle = $("article[data-post=" + sID + "]");
-    if (!oArticle.length) {
-        oArticle = $("article[data-post=0]");
-    }
-    oArticle.show();
-    if (!sJobPost || null === sJobPost) {
-        sJobPost = oArticle.find(".JobTitle").text();
-    }
-    $("#RedMail").attr("href", "mailto:RedmondJobs@MAQSoftware.com?Subject=Application%20for%20the%20post%20of%20" + sJobPost).html("RedmondJobs@MAQSoftware.com");
-}
-
-
-function careersInInd() {
-    "use strict";
-    var oBreadCrumb, sBreadCrumbtext, oJobTitle, queryParam,
-        sJobPost = getParameterByName("pn");
-    $("#IndMail").attr("href", "mailto:IndiaJobs@MAQSoftware.com?Subject=Application%20for%20the%20post%20of%20" + sJobPost).html("IndiaJobs@MAQSoftware.com");
-    oBreadCrumb = $("#BreadCrumb");
-    oJobTitle = $("#JobTitle");
-    sBreadCrumbtext = oBreadCrumb.html();
-    try {
-        oBreadCrumb.html(sBreadCrumbtext.replace("@title", sJobPost));
-        oJobTitle.html(oJobTitle.html().replace("@title", sJobPost));
-        queryParam = getParameterByName("q");
-        if (typeof queryParam !== "undefined" && queryParam !== "") {
-            $.ajax({
-                url: 'https://www.blogger.com/feeds/2523158019509365490/posts/default/-/Openings - India',
-                type: 'GET',
-                dataType: "jsonp",
-                success: function (msg) {
-                    loadCareers(msg, queryParam, oBreadCrumb, oJobTitle, "/#careers#?q=India");
-                },
-                complete: function () {
-                    $("#ProfileData").removeClass("Loading");
-                }
-            });
-        } else {
-            window.location.href = "/#careers#?q=India";
+function updateTitle(viewName) {
+    var sTitle = "MAQ Software | Data Management, Power BI, Artificial Intelligence";
+    if (typeof viewName !== "undefined") {
+        switch (viewName.toLowerCase()) {
+            case "expertise":
+                sTitle = "MAQ Software | Expertise";
+                break;
+            case "engagement":
+                sTitle = "MAQ Software | Engagement";
+                break;
+            case "news":
+                sTitle = "MAQ Software | News";
+                break;
+            case "careers":
+                sTitle = "MAQ Software | Careers";
+                break;
+            case "contact":
+                sTitle = "MAQ Software | Contact";
+                break;
+            case "privacystatement":
+                sTitle = "MAQ Software | Privacy Statement";
+                break;
         }
-    } catch (ex) {
-        console.log(ex.message);
-        setTimeout(careersInInd, 100);
     }
-}
-
-function redirectPowerBI() {
-    window.location.href = "/#expertise/selfservicebi"; // Redirecting to Power BI Expertise
+    $("title").text(sTitle);
 }
