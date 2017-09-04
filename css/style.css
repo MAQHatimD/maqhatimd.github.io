@@ -75,7 +75,7 @@ body {
     line-height: 24px;
     color: black;
     font-size: 13px;
-    font-family: 'SEGOE UI', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 400;
     letter-spacing: 1px;
 }
@@ -181,16 +181,22 @@ p {
     font-size: 13px;
     font-weight: 400;
     margin: 0px 0 10px 0;
-    color: #000;
+    color: Black;
     /*letter-spacing: 1px;*/
+    letter-spacing: -.01em !important;
 }
 
     p.lead, .lead {
-    font-size: 24px;
-    line-height: 28px;
-    padding: 4px 0 2.36px;
-    font-weight: 200; 
+        font-size: 16px;
+        line-height: 28px;
+        padding: 4px 0 2.36px;
+        font-weight: 200;
+        max-height: 56px;
+        letter-spacing: -.01em !important;
     }
+        .home-slider p.lead, .home-slider .lead {
+            font-size: 24px;
+        }
 
     p.dark, .dark, a.dark, h1.dark, h2.dark, h3.dark, h4.dark, h5.dark, h6.dark {
         color: #323232 !important;
@@ -269,28 +275,23 @@ p {
 
 h1, h2, h3, h4, h5, h6 {
     color: #323232;
-    text-transform: uppercase;
-    font-family: 'SEGOE UI', sans-serif;
+    /*text-transform: uppercase;*/
+    font-family: 'Raleway', sans-serif;
     font-weight: 600;
     margin-top: 0px;
     margin-bottom: 10px;
+    letter-spacing: -.01em !important;
 }
 
-h2 {
-    /*font-size: 43px;
+h1 {
+    font-size: 43px;
     letter-spacing: 2px;
-    line-height: 40px;*/
-    font-size: 46px;
-    line-height: 56px;
-    padding: 37px 0 3px;
-    font-weight: 100;
-    letter-spacing: -.01em;      
-    text-transform:none;
+    line-height: 40px;
 }
 
-    /*h1.h1, h2.h2 {
+    h1.h1, h2.h2 {
         letter-spacing: 10px;
-    }*/
+    }
 
 @media (max-width: 767px) {
     h1.h1, h2.h2 {
@@ -298,38 +299,36 @@ h2 {
     }
 }
 
-/*h2 {
+h2 {
     font-size: 27px;
     letter-spacing: 2px;
     line-height: 37px;
     margin-bottom: 20px;
     padding-top: 10px;
-}*/
+}
+
 
 h3 {
     font-size: 21px;
     letter-spacing: 4px;
     line-height: 32px;
-    text-transform:none;
 }
 
 h4 {
     font-size: 17px;
     letter-spacing: 2px;
     line-height: 28px;
-     text-transform:none;
 }
 
-    /*h4.h4 {
+    h4.h4 {
         letter-spacing: 4px;
-    }*/
+    }
 
 h5 {
     font-size: 15px;
     letter-spacing: 2px;
     line-height: 23px;
     font-weight: 600;
-     text-transform:none;
 }
 
 h6 {
@@ -337,13 +336,14 @@ h6 {
     letter-spacing: 2px;
     line-height: 17px;
     font-weight: 600;
-     text-transform:none;
 }
 
 h1.large {
     font-size: 50px;
 }
-
+.ls-point01em {
+    letter-spacing: -.01em !important;
+}
 /*Button Style   ||-----------*/
 .btn:focus {
     outline: none;
@@ -353,7 +353,7 @@ h1.large {
     font-size: 12px;
     line-height: normal;
     font-weight: 600;
-    font-family: 'SEGOE UI', sans-serif;
+    font-family: 'Raleway', sans-serif;
     letter-spacing: 1px;
     text-align: center;
     text-transform: uppercase;
@@ -547,7 +547,7 @@ button, html input[type="button"], input[type="reset"], input[type="submit"] {
 }
 
 button, input, textarea, select {
-    font-family: 'SEGOE UI', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 12px;
 }
 
@@ -577,7 +577,7 @@ button, input, textarea, select {
 
 input, textarea, select {
     margin-bottom: 20px;
-    font-family: 'SEGOE UI', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 12px;
 }
 
@@ -590,13 +590,12 @@ textarea {
 }
 
 label {
-    color: black;
-   font-size: 13px;
+    color: black font-size: 13px;
     margin-bottom: 10px;
     padding-right: 3px;
     margin-top: 6px;
     font-weight: 600;
-    font-family: 'SEGOE UI', sans-serif;
+    font-family: 'Raleway', sans-serif;
     display: block;
 }
 
@@ -1538,7 +1537,7 @@ form label.error {
     -o-transition: all 0.27s cubic-bezier(0, 0, 0.58, 1) 0s;
     -moz-transition: all 0.27s cubic-bezier(0, 0, 0.58, 1) 0s;
     -webkit-transition: all 0.27s cubic-bezier(0, 0, 0.58, 1) 0s;
-    font-family: "SEGOE UI",sans-serif;
+    font-family: "Raleway",sans-serif;
 }
 
     .nav-menu ul.nav-menu-inner li a :hover {
@@ -1900,7 +1899,7 @@ header.header-dark.header-prepare .side-menu-btn ul li a {
         font-weight: 700;
         text-align: center;
         line-height: 14px;
-        font-family: 'SEGOE UI', sans-serif;
+        font-family: 'Raleway', sans-serif;
     }
 
     .cart:hover .cart-dropdown {
@@ -2307,7 +2306,7 @@ header.header-dark.header-prepare .side-menu-btn ul li a {
 .footer .link a {
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 2px;
+    /*letter-spacing: 2px;*/
 }
 
 .privacy {
@@ -3756,7 +3755,7 @@ header.header-dark.header-prepare .side-menu-btn ul li a {
             letter-spacing: 2px;
             font-size: 12px;
             font-weight: 600;
-            font-family: 'SEGOE UI', sans-serif;
+            font-family: 'Raleway', sans-serif;
         }
 
             .container-filter li a.active {
@@ -3986,7 +3985,7 @@ ul.project-detail-block, .project-detail-block ul {
         }
 
     .blog-post .post-meta, .comment-list .post-meta, .sidebar-widget .post-meta {
-        text-transform: uppercase;
+        /*text-transform: uppercase;*/
         color: #999;
         font-size: 13px;
     }
@@ -5140,6 +5139,10 @@ ul.project-detail-block, .project-detail-block ul {
     vertical-align: middle;
 }
 
+.modal-dialog .btn-black-line, .pbi-vall-container-filter li a, .viLinks  {
+    text-transform: none !important;
+}
+
 /*Youtube video*/
 #video-player {
     width: 912px;
@@ -5406,8 +5409,8 @@ ul.nav-tabs {
 }
 
 #client-logos .owl-carousel .owl-stage-outer {
-    padding-left: 31px;
-    padding-right: 31px;
+    margin-left: 35px;
+    margin-right: 35px;
 }
 
 .news-carousel .owl-item {
@@ -5428,10 +5431,4 @@ ul.nav-tabs {
 
 .accordion-title {
     text-transform: none;
-}
-#blog .blog-post {
-margin-bottom:40px;
-}
-.btn-link-a.VwMap {
-    text-transform:none;
 }
