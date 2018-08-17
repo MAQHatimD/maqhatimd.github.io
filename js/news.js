@@ -2,7 +2,7 @@
 
 "use strict";
 var oNewsPager = {
-    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><h2>@title</h2></div><div class="post-media"><img alt="News" title="@tooltip" src="@newsimagesrc"></div><div class="post-entry">@content</div></div>',
+    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="/news-article.html?title=@title"><h2>@title</h2></a></div><div class="post-media"><img alt="News" title="@tooltip" src="@newsimagesrc"></div><div class="post-entry">@content</div></div>',
     pageIndex: 0,
     pagesize: 6
 }, id, highlightid, sClickedHighlightTitle, iClickedHighlightID,
@@ -20,7 +20,7 @@ sLoadingClass = "Loading",
     ], iCount, iTotal = oItalicBookName.length, iTotalHighlight = 6, oNewsHighlightTitle = [iTotalHighlight], oHighlightNewsID = [iTotalHighlight];
 
 function renderNews() {
-    var iStart, iEnd, entry1, sDate, oDatePart, oDate, sTitle, sContent;
+    var iStart, iEnd, entry1, sDate, oDatePart, oDate, sTitle, sContent, sRawTitle;
     oNewsContainer.removeClass(sLoadingClass);
     if (iTotalNews) {
         iStart = oNewsPager.pageIndex * oNewsPager.pagesize;
@@ -59,6 +59,7 @@ function renderNews() {
                 }
                 oDate = oDate.format();
                 sTitle = entry1.getElementsByTagName('title')[0].childNodes[0].nodeValue;
+                sRawTitle = sTitle;
                 sContent = entry1.getElementsByTagName('content')[0].childNodes[0].nodeValue;
                 for (iCount = 0; iCount < iTotal; iCount++) {
                     sTitle = sTitle.replace(oItalicBookName[iCount], "<i class='SemiBold'>" + oItalicBookName[iCount] + "</i>");
@@ -75,7 +76,7 @@ function renderNews() {
                     img.parentNode.removeChild(img);
                 }
                 sContent = $("#bloggerContent").html();
-                oNewsContainer.append(oNewsPager.template.replace("@title", sTitle).replace("@date", oDate).replace("@content", sContent).replace("@newsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
+                oNewsContainer.append(oNewsPager.template.replace(/@title/g, sRawTitle).replace("@date", oDate).replace("@content", sContent).replace("@newsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
             }
         }
         oNewsContainer.find("a").attr("target", "_blank");
@@ -173,15 +174,17 @@ function loadNewsGrid() {
         success: function (sResponse) {
             loadNews(sResponse);
             if (typeof highlightid !== "undefined" && highlightid !== "") {
+                //debugger;
                 highlightid = parseInt(iClickedHighlightID % oNewsPager.pagesize);
                 iTop = $("#LoadPageNews").children('div').eq(highlightid).offset().top - 65;
                 $(sScrollElement).animate({ scrollTop: iTop }, 500);
             } else if (typeof id !== "undefined" && id !== "") {
+                //debugger;
                 id = id > oNewsPager.pagesize ? id - oNewsPager.pagesize : id;
-                iTop = $("#LoadPageNews").children('div').eq(id - 1).offset().top - 65;
+                iTop = $("#LoadPageNews").children('div').eq(id - 1).offset().top - $("#highlights").offset().top - 65 - 34; // 34 for date of news
                 $(sScrollElement).animate({ scrollTop: iTop }, 500);
             }
-            initHighlightCarousal();
+            NewsSliderConfig()
         },
         complete: function () {
             oNewsContainer.removeClass(sLoadingClass);
@@ -189,46 +192,52 @@ function loadNewsGrid() {
     });
 }
 
-function initHighlightCarousal() {
-    $('.item4-carousel').owlCarousel({
-        autoPlay: 2500,
-        autoplay: 2500,
-        slideSpeed: 800,
-        slidespeed: 800,
-        autoplaySpeed: 800,
-        navSpeed: 800,
-        paginationSpeed: 800,
-        stopOnHover: true,
-        items: 4,
-        rewind: true,
-        loop: true,
-        itemsDesktop: [1170, 3],
-        itemsDesktopSmall: [1024, 2],
-        itemsTabletSmall: [768, 1],
-        itemsMobile: [480, 1],
-        pagination: false,  // Hide pagination buttons
-        navigation: true,  // Show next and prev buttons
-        nav: true,  // Show next and prev buttons
-        navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-        navText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-        dots: false
-        ,responsive: {
-            0: {
-                items: 1
+function NewsSliderConfig() {
+    $.getJSON("/Configurations/NewsSlider.json", function (data) {
+        initHighlightCarousal(data);
+    })
+};
+
+function initHighlightCarousal(nSliderConfig) {
+    if (typeof nSliderConfig !== 'undefined' && nSliderConfig !== 'null' && nSliderConfig !== "" && nSliderConfig !== 'false') {
+        $('.item4-carousel').owlCarousel({
+            autoplay: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 2500),
+            slideSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
+            autoplaySpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
+            autoplayHoverPause: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : true),
+            navSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
+            paginationSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
+            items: 4,
+            rewind: true,
+            loop: true,
+            itemsDesktop: [1170, 3],
+            itemsDesktopSmall: [1024, 2],
+            itemsTabletSmall: [768, 1],
+            itemsMobile: [480, 1],
+            pagination: false,  // Hide pagination buttons
+            navigation: true,  // Show next and prev buttons
+            nav: true,  // Show next and prev buttons
+            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
+            navText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
+            dots: false
+            , responsive: {
+                0: {
+                    items: 1
+                }
+                ,
+                570: {
+                    items: 2
+                }
+                ,
+                855: {
+                    items: 3
+                }
+                , 1140: {
+                    items: 4
+                }
             }
-            ,
-            570: {
-                items: 2
-            }
-            ,
-            855: {
-                items: 3
-            }
-            , 1140: {
-                items: 4
-            }
-        }
-    });
+        });
+    }
 }
 
 function newsConstructor() {

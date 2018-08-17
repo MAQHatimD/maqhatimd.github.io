@@ -8,13 +8,13 @@
 function getParameterByName(name) {
     "use strict";
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    var regex = new RegExp("[\\?&]" + name + "=([^&]*)"),
         results = regex.exec(decodeURIComponent(location.href));
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 function redirectPowerBI() {
-    window.location.href = "/#expertise/powerbi"; // Redirecting to Power BI Expertise
+    window.location.href = "/expertise/powerbi"; // Redirecting to Power BI Expertise
 }
 
 function setTabNavLinkBehavior() {
@@ -96,4 +96,31 @@ function getFirstNWordsWithEllipses(data, n) {
         result = "";
     }
     return result;
+}
+
+
+
+
+
+
+$(function () {
+    if (document.documentMode || /Edge/.test(navigator.userAgent)) {
+        cloneNavDropDowns();
+    }
+});
+
+/**
+* Fix for IE/Edge list-item=none render bug on list items hidden when page is initially loaded.
+*/
+
+function cloneNavDropDowns () {
+    var menu_clone;
+    var parent;
+    var hidden_lists = $('.sub-dropdown.dropdown');
+    hidden_lists.each(function(){
+        parent = $(this).parent();
+        menu_clone = $(this).clone();
+        $(this).remove();
+        menu_clone.appendTo(parent);
+    });
 }
