@@ -5819,10 +5819,8 @@ li.h4header {
 }
 
 .blogpost-entry {
-height: 28em;
-    /* word-wrap: break-word; */
+height: 360px;
     text-overflow: ellipsis;
-    /* white-space: nowrap; */
     overflow: hidden;
 }
 
