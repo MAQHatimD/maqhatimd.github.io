@@ -2,7 +2,7 @@
 
 "use strict";
 var oNewsPager = {
-    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><div class="post-media"><img alt="Blogs" title="@tooltip" src="@newsimagesrc"></div><div class="post-entry">@content</div></div>',
+    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><div class="post-media"><img alt="Blogs" title="@tooltip" src="@newsimagesrc"></div><div class="blogpost-entry">@content</div><br><a href="@href1" class="readmoreblog">Read the complete post here</a></div>',
     pageIndex: 0,
     pagesize: 6
 }, id, highlightid, sClickedHighlightTitle, iClickedHighlightID,
@@ -60,7 +60,7 @@ function renderNews() {
                 oDate = oDate.format();
                 sTitle = entry1.getElementsByTagName('title')[0].childNodes[0].nodeValue;
                 sRawTitle = sTitle;
-                slink = entry1.getElementsByTagName('link')[2].getAttribute('href');
+                slink = entry1.getElementsByTagName('link')[4].getAttribute('href');
                 
                 sContent = entry1.getElementsByTagName('content')[0].childNodes[0].nodeValue;
                 for (iCount = 0; iCount < iTotal; iCount++) {
@@ -78,11 +78,10 @@ function renderNews() {
                     img.parentNode.removeChild(img);
                 }
                 sContent = $("#bloggerContent").html();
-                oNewsContainer.append(oNewsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@newsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
+                oNewsContainer.append(oNewsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@href1", slink).replace("@newsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
             }
         }
-        oNewsContainer.find("a").attr("target", "_blank");
-        oNewsContainer.find("img").addClass("post - media");
+       oNewsContainer.find("img").addClass("post - media");
 
         $('#LoadPageNews *').removeAttr('style');
         for (var iCount = 0; iCount < iTotalHighlight; iCount++) {
@@ -183,7 +182,7 @@ function loadNewsGrid() {
             } else if (typeof id !== "undefined" && id !== "") {
                 //debugger;
                 id = id > oNewsPager.pagesize ? id - oNewsPager.pagesize : id;
-                iTop = $("#LoadPageNews").children('div').eq(id - 1).offset().top - $("#highlights").offset().top - 65 - 34; // 34 for date of news
+                iTop = $("#LoadPageNews").children('div').eq(id - 1).offset().top - $("#highlights").offset().top - 65 - 34; // 34 for date of blog
                 $(sScrollElement).animate({ scrollTop: iTop }, 500);
             }
             NewsSliderConfig()

@@ -5817,3 +5817,16 @@ li.h4header {
 .__cf_email__{
     font-weight: 600;
 }
+
+.blogpost-entry {
+height: 28em;
+    /* word-wrap: break-word; */
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+    overflow: hidden;
+}
+
+.readmoreblog {
+    float:right;
+    font-weight:600;
+}
