@@ -170,7 +170,7 @@ function loadNewsGrid() {
     var iTop;
     oNewsContainer.html("").addClass(sLoadingClass);
     $.ajax({
-        url: 'https://www.blogger.com/feeds/3262801613185975083/posts/default/-/News',
+        url: 'https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Blogs',
         type: 'GET',
         dataType: 'jsonp',
         success: function (sResponse) {
