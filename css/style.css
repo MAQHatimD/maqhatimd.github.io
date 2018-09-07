@@ -5828,3 +5828,11 @@ height: 360px;
     float:right;
     font-weight:600;
 }
+.blog-ellipsis{
+    width: -webkit-fill-available;
+    margin-top: -19px;
+    background: white;
+    z-index: 5;
+    text-align: end;
+    opacity: 0.8;
+}

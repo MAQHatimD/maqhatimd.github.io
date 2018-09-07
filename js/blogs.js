@@ -2,7 +2,7 @@
 
 "use strict";
 var oNewsPager = {
-    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><div class="post-media"><img alt="Blogs" title="@tooltip" src="@newsimagesrc"></div><div class="blogpost-entry">@content</div><br><a href="@href1" class="readmoreblog">Read more</a></div>',
+    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><div class="post-media"><img alt="Blogs" title="@tooltip" src="@newsimagesrc"></div><div class="blogpost-entry">@content</div><p class="blog-ellipsis">...</p><a href="@href1" class="readmoreblog">Read more</a></div>',
     pageIndex: 0,
     pagesize: 6
 }, id, highlightid, sClickedHighlightTitle, iClickedHighlightID,
