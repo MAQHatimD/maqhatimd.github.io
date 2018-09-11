@@ -1,50 +1,50 @@
 /*jslint plusplus: true */
 
 "use strict";
-var oNewsPager = {
-    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><div class="post-media"><img alt="Blogs" title="@tooltip" src="@newsimagesrc"></div><div class="blogpost-entry">@content</div><p class="blog-ellipsis"></p><a href="@href1" class="readmoreblog">Read more</a></div>',
+var oBlogsPager = {
+    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><div class="post-media"><img alt="Blogs" title="@tooltip" src="@Blogsimagesrc"></div><div class="blogpost-entry">@content</div><p class="blog-ellipsis"></p><a href="@href1" class="readmoreblog">Read more</a></div>',
     pageIndex: 0,
     pagesize: 6
 }, id, highlightid, sClickedHighlightTitle, iClickedHighlightID,
-iTotalNews = 0,
+iTotalBlogs = 0,
 iIterator = 0,
 iMaxPageIndex,
-oNewsData = null,
-oNewsContainer,
+oBlogsData = null,
+oBlogsContainer,
 sScrollElement = "body,html",
 sLoadingClass = "Loading",
-    oItalicBookName = [
-                    "What I Did Not Learn in B-School: Insights for New Managers"
-                    , "What I Did Not Learn at IIT: Transition from Campus to Workplace"
-                    , "What I Did Not Learn at IIT - Transitioning from Campus to Workplace"
-    ], iCount, iTotal = oItalicBookName.length, iTotalHighlight = 6, oNewsHighlightTitle = [iTotalHighlight], oHighlightNewsID = [iTotalHighlight];
+     iCount, iTotalHighlight = 6, oBlogsHighlightTitle = [iTotalHighlight], oHighlightBlogsID = [iTotalHighlight];
 
-function renderNews() {
-    var iStart, iEnd, entry1, sDate, oDatePart, oDate, sTitle, sContent, sRawTitle,slink;
-    oNewsContainer.removeClass(sLoadingClass);
-    if (iTotalNews) {
-        iStart = oNewsPager.pageIndex * oNewsPager.pagesize;
-        if (iStart >= iTotalNews) {
-            iStart = iTotalNews - 1;
-            oNewsPager.pageIndex = iStart;
-            if (iTotalNews > 1) {
+function renderBlogs() {
+    var iStart, iEnd, entry1, sDate, oDatePart, oDate, sTitle, sContent, sRawTitle, slink;
+    oBlogsContainer.removeClass(sLoadingClass);
+    if (iTotalBlogs) {
+        iStart = oBlogsPager.pageIndex * oBlogsPager.pagesize;
+        if (iStart >= iTotalBlogs) {
+            iStart = iTotalBlogs - 1;
+            oBlogsPager.pageIndex = iStart;
+            if (iTotalBlogs > 1) {
                 $("#Previous").removeClass("hidden");
                 $("#Next").addClass("hidden");
             }
         } else if (iStart <= 0) {
             iStart = 0;
-            oNewsPager.pageIndex = iStart;
-            if (iTotalNews > 1) {
+            oBlogsPager.pageIndex = iStart;
+            if (iTotalBlogs > 1) {
                 $("#Next").removeClass("hidden");
                 $("#Previous").addClass("hidden");
             }
+            else if (iTotalBlogs = 1) {
+                $("#Next").addClass("hidden");
+                $("#Previous").addClass("hidden");
+            }
         }
-        iEnd = iStart + oNewsPager.pagesize;
-        if (iEnd > iTotalNews) {
-            iEnd = iTotalNews;
+        iEnd = iStart + oBlogsPager.pagesize;
+        if (iEnd > iTotalBlogs) {
+            iEnd = iTotalBlogs;
         }
         for (iIterator = iStart; iIterator < iEnd; iIterator++) {
-            entry1 = oNewsData.getElementsByTagName('entry').item(iIterator);
+            entry1 = oBlogsData.getElementsByTagName('entry').item(iIterator);
             if (entry1) {
                 sDate = entry1.getElementsByTagName('published')[0].childNodes[0].nodeValue.toLowerCase().split("t");
                 oDatePart = [];
@@ -61,12 +61,9 @@ function renderNews() {
                 sTitle = entry1.getElementsByTagName('title')[0].childNodes[0].nodeValue;
                 sRawTitle = sTitle;
                 slink = entry1.getElementsByTagName('link')[4].getAttribute('href');
-                
-                sContent = entry1.getElementsByTagName('content')[0].childNodes[0].nodeValue;
-                for (iCount = 0; iCount < iTotal; iCount++) {
-                    sTitle = sTitle.replace(oItalicBookName[iCount], "<i class='SemiBold'>" + oItalicBookName[iCount] + "</i>");
-                }
 
+                sContent = entry1.getElementsByTagName('content')[0].childNodes[0].nodeValue;
+                
                 $("#bloggerContent").html(sContent);
                 var bloggerContent = document.getElementById("bloggerContent");
                 var imgs = bloggerContent.getElementsByTagName('img');
@@ -78,19 +75,19 @@ function renderNews() {
                     img.parentNode.removeChild(img);
                 }
                 sContent = $("#bloggerContent").html();
-                oNewsContainer.append(oNewsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@href1", slink).replace("@newsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
+                oBlogsContainer.append(oBlogsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@href1", slink).replace("@Blogsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
             }
         }
-       oNewsContainer.find("img").addClass("post - media");
+        oBlogsContainer.find("img").addClass("post - media");
 
-        $('#LoadPageNews *').removeAttr('style');
+        $('#LoadPageBlogs *').removeAttr('style');
         for (var iCount = 0; iCount < iTotalHighlight; iCount++) {
-            for (iIterator = 0; iIterator < iTotalNews; iIterator++) {
-                entry1 = oNewsData.getElementsByTagName('entry').item(iIterator);
+            for (iIterator = 0; iIterator < iTotalBlogs; iIterator++) {
+                entry1 = oBlogsData.getElementsByTagName('entry').item(iIterator);
                 if (entry1) {
                     sTitle = entry1.getElementsByTagName('title')[0].childNodes[0].nodeValue;
-                    if (sTitle === oNewsHighlightTitle[iCount]) {
-                        oHighlightNewsID[iCount] = iIterator;
+                    if (sTitle === oBlogsHighlightTitle[iCount]) {
+                        oHighlightBlogsID[iCount] = iIterator;
                         break;
                     }
                 }
@@ -98,49 +95,42 @@ function renderNews() {
         }
     }
 }
-function loadNews(sNewsData) {
+function loadBlogs(sBlogsData) {
     try {
         var parser = new DOMParser();
-        oNewsData = parser.parseFromString(sNewsData, "text/xml");
-        iTotalNews = oNewsData.getElementsByTagName('entry').length;
-        if (iTotalNews || oNewsData.getElementsByTagName('content')) {
-            iMaxPageIndex = Math.round(iTotalNews / oNewsPager.pagesize);
+        oBlogsData = parser.parseFromString(sBlogsData, "text/xml");
+        iTotalBlogs = oBlogsData.getElementsByTagName('entry').length;
+        if (iTotalBlogs || oBlogsData.getElementsByTagName('content')) {
+            iMaxPageIndex = Math.round(iTotalBlogs / oBlogsPager.pagesize);
             $("#Pagination").show();
-            renderNews();
+            renderBlogs();
         }
     } catch (ignore) {
     }
 }
 
-function loadNewsHighlightSection() {
-    $.ajax({
-        url: 'https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Highlight',
-        type: 'GET',
-        dataType: 'jsonp',
-        success: function (sResponse) {
-            loadNewsHighlight(sResponse);
-        }
-    });
+function loadBlogsHighlightSection() {
+    getBlogData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Highlight', loadBlogsHighlight);
 }
-function loadNewsHighlight(sNewsData) {
+function loadBlogsHighlight(sBlogsData) {
     try {
         var parser = new DOMParser();
-        oNewsData = parser.parseFromString(sNewsData, "text/xml");
-        iTotalNews = oNewsData.getElementsByTagName('entry').length;
-        renderNewsHighlight();
+        oBlogsData = parser.parseFromString(sBlogsData, "text/xml");
+        iTotalBlogs = oBlogsData.getElementsByTagName('entry').length;
+        renderBlogsHighlight();
     } catch (ignore) {
     }
 }
-function renderNewsHighlight() {
+function renderBlogsHighlight() {
 
     var iStart, iEnd, entry1//, sDate
-        , oDatePart, oDate, iTotalNews = 0, iNumber;
+        , oDatePart, oDate, iTotalBlogs = 0, iNumber;
     //debugger;
-    if (typeof oNewsData !== "undefined") {
-        iEnd = oNewsData.getElementsByTagName('entry').length;
+    if (typeof oBlogsData !== "undefined") {
+        iEnd = oBlogsData.getElementsByTagName('entry').length;
         for (iStart = 0; iStart < iTotalHighlight && iStart < iEnd; iStart++) {
             iNumber = iStart + 1;
-            entry1 = oNewsData.getElementsByTagName('entry').item(iStart);
+            entry1 = oBlogsData.getElementsByTagName('entry').item(iStart);
             var content = entry1.getElementsByTagName('content')[0].childNodes[0].nodeValue;
             $("#bloggerContent").html(content);
             var bloggerContent = document.getElementById("bloggerContent");
@@ -153,47 +143,38 @@ function renderNewsHighlight() {
             }
 
             var title = entry1.getElementsByTagName('title')[0].childNodes[0].nodeValue;
-            oNewsHighlightTitle[iStart] = title;
-            for (iCount = 0; iCount < iTotal; iCount++) {
-                title = title.replace(oItalicBookName[iCount], "<i class = 'SemiBold'>" + oItalicBookName[iCount] + "</i>");
-            }
-
-            $("#newshighlighttitle" + iNumber).html(title);
-            $("#newshighlightimg" + iNumber).attr('src', src);
-            $("#newshighlightimg" + iNumber).attr('title',getFirstNWordsWithEllipses(title,4));
+            oBlogsHighlightTitle[iStart] = title;
+            $("#blogshighlighttitle" + iNumber).html(title);
+            $("#blogshighlightimg" + iNumber).attr('src', src);
+            $("#blogshighlightimg" + iNumber).attr('title', getFirstNWordsWithEllipses(title, 4));
         }
     }
 }
 
-function loadNewsGrid() {
+function loadBlogsGrid() {
     var iTop;
-    oNewsContainer.html("").addClass(sLoadingClass);
-    $.ajax({
-        url: 'https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Blogs',
-        type: 'GET',
-        dataType: 'jsonp',
-        success: function (sResponse) {
-            loadNews(sResponse);
-            if (typeof highlightid !== "undefined" && highlightid !== "") {
-                //debugger;
-                highlightid = parseInt(iClickedHighlightID % oNewsPager.pagesize);
-                iTop = $("#LoadPageNews").children('div').eq(highlightid).offset().top - 65;
-                $(sScrollElement).animate({ scrollTop: iTop }, 500);
-            } else if (typeof id !== "undefined" && id !== "") {
-                //debugger;
-                id = id > oNewsPager.pagesize ? id - oNewsPager.pagesize : id;
-                iTop = $("#LoadPageNews").children('div').eq(id - 1).offset().top - $("#highlights").offset().top - 65 - 34; // 34 for date of blog
-                $(sScrollElement).animate({ scrollTop: iTop }, 500);
-            }
-            NewsSliderConfig()
-        },
-        complete: function () {
-            oNewsContainer.removeClass(sLoadingClass);
-        }
-    });
+    oBlogsContainer.html("").addClass(sLoadingClass);
+    getBlogData2('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Blogs', getBlogsSuccess,getBlogsOnComplete);
 }
-
-function NewsSliderConfig() {
+function getBlogsSuccess(sResponse) {
+    loadBlogs(sResponse);
+    if (typeof highlightid !== "undefined" && highlightid !== "") {
+        //debugger;
+        highlightid = parseInt(iClickedHighlightID % oBlogsPager.pagesize);
+        iTop = $("#LoadPageBlogs").children('div').eq(highlightid).offset().top - 65;
+        $(sScrollElement).animate({ scrollTop: iTop }, 500);
+    } else if (typeof id !== "undefined" && id !== "") {
+        //debugger;
+        id = id > oBlogsPager.pagesize ? id - oBlogsPager.pagesize : id;
+        iTop = $("#LoadPageBlogs").children('div').eq(id - 1).offset().top - $("#highlights").offset().top - 65 - 34; // 34 for date of blog
+        $(sScrollElement).animate({ scrollTop: iTop }, 500);
+    }
+    BlogsSliderConfig();
+}
+function getBlogsOnComplete() {
+    oBlogsContainer.removeClass(sLoadingClass);
+}
+function BlogsSliderConfig() {
     $.getJSON("/Configurations/NewsSlider.json", function (data) {
         initHighlightCarousal(data);
     })
@@ -212,7 +193,7 @@ function initHighlightCarousal(nSliderConfig) {
             singleItem: true,
             rewind: true,
             //loop: true, //use this when more than 4 higlights are present
-            loop:false,
+            loop: false,
             itemsDesktop: [1170, 3],
             itemsDesktopSmall: [1024, 2],
             itemsTabletSmall: [768, 1],
@@ -243,70 +224,70 @@ function initHighlightCarousal(nSliderConfig) {
     }
 }
 
-function newsConstructor() {
+function blogsConstructor() {
     //debugger;
     try {
-        loadNewsHighlightSection();
+        loadBlogsHighlightSection();
     } catch (ex) {
         // ignore
     }
 
-    oNewsPager.pageIndex = 0;
+    oBlogsPager.pageIndex = 0;
     highlightid = "";
-    oNewsContainer = $("#LoadPageNews");
+    oBlogsContainer = $("#LoadPageBlogs");
     var iTop = 0;
     id = getParameterByName("id");
 
     if (typeof id !== "undefined" && id !== "") {
         $(sScrollElement).animate({ scrollTop: iTop }, 500);
-        oNewsPager.pageIndex = id > oNewsPager.pagesize ? 1 : 0;
+        oBlogsPager.pageIndex = id > oBlogsPager.pagesize ? 1 : 0;
 
     }
 
-    loadNewsGrid();
+    loadBlogsGrid();
 
     $("#Pagination p").click(function () {
         var oCurrentElement = $(this),
             iClicked = oCurrentElement.attr("data-clicked");
         if (!oCurrentElement.hasClass("hidden")) {
             if (iClicked === "0") {
-                oNewsPager.pageIndex--;
+                oBlogsPager.pageIndex--;
                 $("#Next").removeClass("hidden");
-                if (oNewsPager.pageIndex <= 0) {
-                    oNewsPager.pageIndex = 0;
+                if (oBlogsPager.pageIndex <= 0) {
+                    oBlogsPager.pageIndex = 0;
                     $("#Previous").addClass("hidden");
                 }
             } else {
-                oNewsPager.pageIndex++;
-                if (oNewsPager.pageIndex >= iMaxPageIndex) {
-                    oNewsPager.pageIndex = iMaxPageIndex;
+                oBlogsPager.pageIndex++;
+                if (oBlogsPager.pageIndex >= iMaxPageIndex) {
+                    oBlogsPager.pageIndex = iMaxPageIndex;
                     $("#Next").addClass("hidden");
                 } else {
                     $("#Previous").removeClass("hidden");
                 }
             }
-            oNewsContainer.html("").addClass(sLoadingClass);
-            iTop = oNewsContainer.offset().top - 65; // -65 for header/padding
+            oBlogsContainer.html("").addClass(sLoadingClass);
+            iTop = oBlogsContainer.offset().top - 65; // -65 for header/padding
             $(sScrollElement).animate({ scrollTop: iTop }, 500);
-            renderNews();
+            renderBlogs();
         }
     });
 
-    $(".news-highlight").unbind("click");
-    $(".news-highlight").click(function () {
+    $(".blogs-highlight").unbind("click");
+    $(".blogs-highlight").click(function () {
         highlightid = $(this).attr("data-clicked");
         if (typeof highlightid !== "undefined" && highlightid !== "") {
             //$(sScrollElement).animate({ scrollTop: iTop }, 500);
-            sClickedHighlightTitle = oNewsHighlightTitle[highlightid - 1];
-            iClickedHighlightID = oHighlightNewsID[highlightid - 1];
-            oNewsPager.pageIndex = parseInt((iClickedHighlightID + 1) / oNewsPager.pagesize);
-            loadNewsGrid();
-            if (oNewsPager.pageIndex <= 0) {
-                oNewsPager.pageIndex = 0;
+            sClickedHighlightTitle = oBlogsHighlightTitle[highlightid - 1];
+            iClickedHighlightID = oHighlightBlogsID[highlightid - 1];
+            oBlogsPager.pageIndex = parseInt((iClickedHighlightID + 1) / oBlogsPager.pagesize);
+            loadBlogsGrid();
+            if (oBlogsPager.pageIndex <= 0) {
+                oBlogsPager.pageIndex = 0;
                 $("#Previous").addClass("hidden");
             }
-            if (oNewsPager.pageIndex >= iMaxPageIndex) {
-                oNewsPager.pageIndex = iMaxPageIndex;
+            if (oBlogsPager.pageIndex >= iMaxPageIndex) {
+                oBlogsPager.pageIndex = iMaxPageIndex;
                 $("#Next").addClass("hidden");
             } else {
                 $("#Previous").removeClass("hidden");

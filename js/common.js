@@ -124,3 +124,23 @@ function cloneNavDropDowns () {
         menu_clone.appendTo(parent);
     });
 }
+
+
+function getBlogData(blogUrl,successCallBack) {
+    $.ajax({
+        url: blogUrl,
+        type: 'GET',
+        dataType: 'jsonp',
+        success: successCallBack,
+    });
+}
+
+function getBlogData2(blogUrl, successCallBack,completeCallBack) {
+    $.ajax({
+        url: blogUrl,
+        type: 'GET',
+        dataType: 'jsonp',
+        success: successCallBack,
+        complete: completeCallBack
+    });
+}
