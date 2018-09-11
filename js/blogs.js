@@ -110,7 +110,7 @@ function loadBlogs(sBlogsData) {
 }
 
 function loadBlogsHighlightSection() {
-    getBlogData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Highlight', loadBlogsHighlight);
+    getBlogData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Highlight', loadBlogsHighlight, function () { });
 }
 function loadBlogsHighlight(sBlogsData) {
     try {
