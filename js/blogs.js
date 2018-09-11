@@ -154,7 +154,7 @@ function renderBlogsHighlight() {
 function loadBlogsGrid() {
     var iTop;
     oBlogsContainer.html("").addClass(sLoadingClass);
-    getBlogData2('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Blogs', getBlogsSuccess,getBlogsOnComplete);
+    getBlogData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Blogs', getBlogsSuccess,getBlogsOnComplete);
 }
 function getBlogsSuccess(sResponse) {
     loadBlogs(sResponse);
