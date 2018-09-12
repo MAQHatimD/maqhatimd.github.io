@@ -153,22 +153,22 @@ function renderBlogsHighlight() {
 }
 
 function loadBlogsGrid() {
-    var iTop;
     oBlogsContainer.html("").addClass(sLoadingClass);
     getBlogData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Blogs', getBlogsSuccess,getBlogsOnComplete); 
 }
 function getBlogsSuccess(sResponse) {
+    var iTop;
     loadBlogs(sResponse);
     if (typeof highlightid !== "undefined" && highlightid !== "") {
         //debugger;
         highlightid = parseInt(iClickedHighlightID % oBlogsPager.pagesize);
-        iTop = $("#LoadPageBlogs").children('div').eq(highlightid).offset().top - 65;
+        iTop = $("#LoadPageBlogs").children('div').eq(Number(highlightid)*3).offset().top - 65;
         $(sScrollElement).animate({ scrollTop: iTop }, 500);
     } else if (typeof id !== "undefined" && id !== "") {
         //debugger;
         id = id > oBlogsPager.pagesize ? id - oBlogsPager.pagesize : id;
         iTop = $("#LoadPageBlogs").children('div').eq(id - 1).offset().top - $("#highlights").offset().top - 65 - 34; // 34 for date of blog
-        $(sScrollElement).animate({ scrollTop: iTop }, 500);
+        $(sScrollElement).animate({ scrollTop: iTop }, 300);
     }
     BlogsSliderConfig();
 }
@@ -184,14 +184,16 @@ function BlogsSliderConfig() {
 function initHighlightCarousal(nSliderConfig) {
     if (typeof nSliderConfig !== 'undefined' && nSliderConfig !== 'null' && nSliderConfig !== "" && nSliderConfig !== 'false') {
         $('.item4-carousel').owlCarousel({
-            autoplay: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 2500),
+            //autoplay: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 2500),
+            autoplay:false,
             slideSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
             autoplaySpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
             autoplayHoverPause: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : true),
             navSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
             paginationSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
-            items: 4,
-            center: true,
+            //items: 4,
+            items: 2,
+            //center: true,
             //singleItem: true,
             rewind: true,
             //loop: true, //use this when more than 4 higlights are present
