@@ -190,7 +190,7 @@ function initHighlightCarousal(nSliderConfig) {
             navSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
             paginationSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
             items: 4,
-            singleItem: true,
+            //singleItem: true,
             rewind: true,
             //loop: true, //use this when more than 4 higlights are present
             loop: false,
