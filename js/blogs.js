@@ -103,7 +103,7 @@ function loadBlogs(sBlogsData) {
         iTotalBlogs = oBlogsData.getElementsByTagName('entry').length;
         if (iTotalBlogs || oBlogsData.getElementsByTagName('content')) {
             iMaxPageIndex = Math.round(iTotalBlogs / oBlogsPager.pagesize);
-            $("#Pagination").show();
+            //$("#Pagination").show();
             renderBlogs();
         }
     } catch (ignore) {
