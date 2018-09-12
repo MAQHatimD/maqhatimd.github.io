@@ -2,7 +2,7 @@
 
 "use strict";
 var oBlogsPager = {
-    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><div class="post-media"><img alt="Blogs" title="@tooltip" src="@Blogsimagesrc"></div><div class="blogpost-entry">@content</div><p class="blog-ellipsis"></p><a href="@href1" class="readmoreblog">Read more</a></div>',
+    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><!--<div class="post-media"><img alt="Blogs" title="@tooltip" src="@Blogsimagesrc">--></div><div class="blogpost-entry">@content</div><p class="blog-ellipsis"></p><a href="@href1" class="readmoreblog">Read more</a></div>',
     pageIndex: 0,
     pagesize: 6
 }, id, highlightid, sClickedHighlightTitle, iClickedHighlightID,
@@ -75,7 +75,8 @@ function renderBlogs() {
                     img.parentNode.removeChild(img);
                 }
                 sContent = $("#bloggerContent").html();
-                oBlogsContainer.append(oBlogsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@href1", slink).replace("@Blogsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
+                //oBlogsContainer.append(oBlogsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@href1", slink).replace("@Blogsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
+                oBlogsContainer.append(oBlogsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@href1", slink).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
             }
         }
         oBlogsContainer.find("img").addClass("post - media");
