@@ -5836,3 +5836,44 @@ height: 360px;
     opacity: 0.8;
     height: 24px;
 }
+@media (max-width:2000px) {
+    .blogs-carousel .owl-stage{
+        padding-left:15vw;
+    }
+}
+@media (max-width:1680px) {
+    .blogs-carousel .owl-stage{
+        padding-left:16vw;
+    }
+}
+@media (max-width:1600px) {
+    .blogs-carousel .owl-stage{
+        padding-left:17vw;
+    }
+}
+@media (max-width:1550px) {
+    .blogs-carousel .owl-stage{
+        padding-left:18vw;
+    }
+}
+@media (max-width:1450px) {
+    .blogs-carousel .owl-stage{
+        padding-left:19vw;
+    }
+}
+@media (max-width:1370px) {
+    .blogs-carousel .owl-stage{
+        padding-left:20vw;
+    }
+}
+@media (max-width:1280px) {
+    .blogs-carousel .owl-stage{
+        padding-left:22vw;
+    }
+}
+
+@media (max-width:1000px) {
+    .blogs-carousel .owl-stage{
+        padding-left:0;
+    }
+}
