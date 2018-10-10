@@ -20,7 +20,7 @@ sLoadingClass = "Loading",
     ], iCount, iTotal = oItalicBookName.length, iTotalHighlight = 6, oNewsHighlightTitle = [iTotalHighlight], oHighlightNewsID = [iTotalHighlight];
 
 function renderNews() {
-    var iStart, iEnd, entry1, sDate, oDatePart, oDate, sTitle, sContent, sRawTitle,slink;
+    var iStart, iEnd, entry1, sDate, oDatePart, oDate, sTitle, sContent, sRawTitle, slink;
     oNewsContainer.removeClass(sLoadingClass);
     if (iTotalNews) {
         iStart = oNewsPager.pageIndex * oNewsPager.pagesize;
@@ -61,7 +61,7 @@ function renderNews() {
                 sTitle = entry1.getElementsByTagName('title')[0].childNodes[0].nodeValue;
                 sRawTitle = sTitle;
                 slink = entry1.getElementsByTagName('link')[2].getAttribute('href');
-                
+
                 sContent = entry1.getElementsByTagName('content')[0].childNodes[0].nodeValue;
                 for (iCount = 0; iCount < iTotal; iCount++) {
                     sTitle = sTitle.replace(oItalicBookName[iCount], "<i class='SemiBold'>" + oItalicBookName[iCount] + "</i>");
@@ -113,7 +113,7 @@ function loadNews(sNewsData) {
 }
 
 function loadNewsHighlightSection() {
-    getBlogData('https://www.blogger.com/feeds/2523158019509365490/posts/default/-/Highlight', loadNewsHighlight, function () { });
+    getBloggerData('https://www.blogger.com/feeds/2523158019509365490/posts/default/-/Highlight', loadNewsHighlight, function () { });
 }
 function loadNewsHighlight(sNewsData) {
     try {
@@ -153,14 +153,14 @@ function renderNewsHighlight() {
 
             $("#newshighlighttitle" + iNumber).html(title);
             $("#newshighlightimg" + iNumber).attr('src', src);
-            $("#newshighlightimg" + iNumber).attr('title',getFirstNWordsWithEllipses(title,4));
+            $("#newshighlightimg" + iNumber).attr('title', getFirstNWordsWithEllipses(title, 4));
         }
     }
 }
 
 function loadNewsGrid() {
     oNewsContainer.html("").addClass(sLoadingClass);
-    getBlogData('https://www.blogger.com/feeds/2523158019509365490/posts/default/-/News', getNewsSuccess, getNewsOnComplete);
+    getBloggerData('https://www.blogger.com/feeds/2523158019509365490/posts/default/-/News', getNewsSuccess, getNewsOnComplete);
 }
 function getNewsSuccess(sResponse) {
     var iTop;

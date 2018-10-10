@@ -2,7 +2,7 @@
 
 "use strict";
 var oBlogsPager = {
-    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div><!--<div class="post-media"><img alt="Blogs" title="@tooltip" src="@Blogsimagesrc">--></div><div class="blogpost-entry">@content</div><p class="blog-ellipsis"></p><a href="@href1" class="readmoreblog">Read more</a></div><div class="spacer-90"></div>',
+    template: '<div><div class="post-meta"><span>@date</span></div><div class="post-header"><a href="@href"><h2>@title</h2></a></div></div><div class="blogpost-entry">@content</div><p class="blog-ellipsis"></p><a href="@href1" class="readmoreblog">Read more</a></div><div class="spacer-90"></div>',
     pageIndex: 0,
     pagesize: 6
 }, id, highlightid, sClickedHighlightTitle, iClickedHighlightID,
@@ -63,7 +63,7 @@ function renderBlogs() {
                 slink = entry1.getElementsByTagName('link')[2].getAttribute('href');
 
                 sContent = entry1.getElementsByTagName('content')[0].childNodes[0].nodeValue;
-                
+
                 $("#bloggerContent").html(sContent);
                 var bloggerContent = document.getElementById("bloggerContent");
                 var imgs = bloggerContent.getElementsByTagName('img');
@@ -75,7 +75,6 @@ function renderBlogs() {
                     img.parentNode.removeChild(img);
                 }
                 sContent = $("#bloggerContent").html();
-                //oBlogsContainer.append(oBlogsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@href1", slink).replace("@Blogsimagesrc", src).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
                 oBlogsContainer.append(oBlogsPager.template.replace(/@title/g, sRawTitle).replace("@href", slink).replace("@date", oDate).replace("@content", sContent).replace("@href1", slink).replace("@tooltip", getFirstNWordsWithEllipses(sTitle, 4)));
             }
         }
@@ -111,7 +110,7 @@ function loadBlogs(sBlogsData) {
 }
 
 function loadBlogsHighlightSection() {
-    getBlogData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Highlight', loadBlogsHighlight, function () { });
+    getBloggerData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Highlight', loadBlogsHighlight, function () { });
 }
 function loadBlogsHighlight(sBlogsData) {
     try {
@@ -154,7 +153,7 @@ function renderBlogsHighlight() {
 
 function loadBlogsGrid() {
     oBlogsContainer.html("").addClass(sLoadingClass);
-    getBlogData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Blogs', getBlogsSuccess,getBlogsOnComplete); 
+    getBloggerData('https://www.blogger.com/feeds/3262801613185975083/posts/default/-/Blogs', getBlogsSuccess, getBlogsOnComplete);
 }
 function getBlogsSuccess(sResponse) {
     var iTop;
@@ -162,8 +161,8 @@ function getBlogsSuccess(sResponse) {
     if (typeof highlightid !== "undefined" && highlightid !== "") {
         //debugger;
         highlightid = parseInt(iClickedHighlightID % oBlogsPager.pagesize);
-        iTop = $("#LoadPageBlogs").children('div').eq(Number(highlightid)*3).offset().top - 65;
-        $(sScrollElement).animate({ scrollTop: iTop }, 500);
+        iTop = $("#LoadPageBlogs").children('div').eq(Number(highlightid) * 3).offset().top - 65;
+        $(sScrollElement).animate({ scrollTop: iTop }, 300);
     } else if (typeof id !== "undefined" && id !== "") {
         //debugger;
         id = id > oBlogsPager.pagesize ? id - oBlogsPager.pagesize : id;
@@ -185,7 +184,7 @@ function initHighlightCarousal(nSliderConfig) {
     if (typeof nSliderConfig !== 'undefined' && nSliderConfig !== 'null' && nSliderConfig !== "" && nSliderConfig !== 'false') {
         $('.item4-carousel').owlCarousel({
             //autoplay: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 2500),
-            autoplay:false,
+            autoplay: false,
             slideSpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
             autoplaySpeed: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : 800),
             autoplayHoverPause: (nSliderConfig.autoplayHoverPause !== typeof undefined ? nSliderConfig.autoplayHoverPause : true),
