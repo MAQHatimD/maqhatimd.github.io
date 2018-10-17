@@ -106,7 +106,7 @@ function getFirstNWordsWithEllipses(data, n) {
 $(function () {
     if (document.documentMode || /Edge/.test(navigator.userAgent)) {
         cloneNavDropDowns();
-    }
+    }  
 });
 
 /**
@@ -134,3 +134,4 @@ function getBloggerData(blogUrl, successCallBack, completeCallBack) {
         complete: completeCallBack
     });
 }
+
